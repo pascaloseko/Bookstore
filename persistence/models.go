@@ -34,7 +34,7 @@ type Event struct {
 	Duration  int    `json:"duration"`
 	StartDate int64  `json:"startdate"`
 	EndDate   int64  `json:"enddate"`
-	Location  Location
+	Location  *Location
 }
 
 // Location struct
