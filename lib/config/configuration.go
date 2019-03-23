@@ -14,13 +14,19 @@ var RestfulEPDefault = "localhost:8181"
 //ServiceConfig ...
 type ServiceConfig struct {
 	RestfulEndpoint string `json:"restfulapi_endpoint"`
+	DbAddress       string `json:"dbaddress"`
+	DbPort          string `json:"dbport"`
+	DbUser          string `json:"dbuser"`
+	DbName          string `json:"dbname"`
+	DbPassword      string `json:"dbpass"`
 }
+
+// Config ...
+var Config ServiceConfig
 
 //ExtractConfiguration extracts configuration details
 func ExtractConfiguration(filename string) (ServiceConfig, error) {
-	conf := ServiceConfig{
-		RestfulEPDefault,
-	}
+	conf := ServiceConfig{}
 
 	file, err := os.Open(filename)
 	defer file.Close()

@@ -1,0 +1,10 @@
+{
+    "server_read_timeout": 10,
+    "server_write_timeout": 600,
+    "dbaddress": "localhost",
+    "dbport":   "5432",
+    "dbuser":   "myadmin",
+    "dbname":   "events",
+    "dbpass": "password",
+    "restfulapi_endpoint": "localhost:8080"
+}
