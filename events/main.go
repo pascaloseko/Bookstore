@@ -16,5 +16,5 @@ func main() {
 	// extract config details
 	conf, _ := config.ExtractConfiguration(*confPath)
 	fmt.Println("Server running on " + conf.RestfulEndpoint)
-	log.Println(rest.ServeAPI(conf.RestfulEndpoint))
+	log.Println(rest.ServeAPI(conf.RestfulEndpoint, nil))
 }
