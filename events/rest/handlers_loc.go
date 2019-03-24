@@ -8,7 +8,6 @@ import (
 	"github.com/pascaloseko/Events/persistence"
 )
 
-
 /*
 
 {
@@ -34,4 +33,13 @@ func NewLocationHandler(w http.ResponseWriter, r *http.Request) {
 		RespondWithError(w, "error occured while persisting location", http.StatusInternalServerError)
 	}
 	RespondWithJSON(w, http.StatusCreated, loc)
+}
+
+// AllLocations gets all available locations
+func AllLocations(w http.ResponseWriter, r *http.Request) {
+	loc, err := persistence.GetLocations()
+	if err != nil {
+		RespondWithError(w, "error occured while getting locations", http.StatusInternalServerError)
+	}
+	RespondWithJSON(w, http.StatusOK, loc)
 }

@@ -20,6 +20,7 @@ func ServeAPI(endpoint string, databasehandler persistence.DatabaseHandler) erro
 	eventsrouter.Methods("DELETE").Path("/{id}").HandlerFunc(DeletEventHandler)
 
 	eventsrouter.Methods("POST").Path("/location").HandlerFunc(NewLocationHandler)
+	eventsrouter.Methods("GET").Path("/locations").HandlerFunc(AllLocations)
 
 	err := http.ListenAndServe(endpoint, r)
 	if err != nil {

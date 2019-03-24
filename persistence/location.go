@@ -11,3 +11,23 @@ func (l *Location) AddLocation() (err error) {
 	err = stmt.QueryRow(l.Name, l.Address, l.Country, l.OpenTime, l.CloseTime).Scan(&l.ID)
 	return
 }
+
+// GetLocations gets all available locations
+func GetLocations() (locations []Location, err error) {
+	rows, err := Db.Query("SELECT * FROM location")
+	if err != nil {
+		return
+	}
+
+	for rows.Next() {
+		loc := Location{}
+		if err = rows.Scan(&loc.ID, &loc.Name, &loc.Address, &loc.Country, &loc.OpenTime, &loc.CloseTime); err != nil {
+			return
+		}
+
+		locations = append(locations, loc)
+	}
+
+	rows.Close()
+	return
+}
