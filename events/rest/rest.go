@@ -10,14 +10,16 @@ import (
 
 // ServeAPI routes for the event service
 func ServeAPI(endpoint string, databasehandler persistence.DatabaseHandler) error {
-	handler := New(databasehandler)
+	// handler := New(databasehandler)
 	r := mux.NewRouter()
 	eventsrouter := r.PathPrefix("/events").Subrouter()
 	eventsrouter.Methods("GET").Path("/{SearchCriteria}/{search}").HandlerFunc(FindEventHandler)
 	eventsrouter.Methods("GET").Path("").HandlerFunc(AllEventHandler)
-	eventsrouter.Methods("POST").Path("").HandlerFunc(handler.NewEventHandler)
+	eventsrouter.Methods("POST").Path("").HandlerFunc(NewEventHandler)
 	eventsrouter.Methods("PUT").Path("/{id}").HandlerFunc(UpdatEventHandler)
 	eventsrouter.Methods("DELETE").Path("/{id}").HandlerFunc(DeletEventHandler)
+
+	eventsrouter.Methods("POST").Path("/location").HandlerFunc(NewLocationHandler)
 
 	err := http.ListenAndServe(endpoint, r)
 	if err != nil {
