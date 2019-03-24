@@ -29,12 +29,12 @@ type Booking struct {
 
 // Event struct
 type Event struct {
-	ID        int    `json:"id"`
-	Name      string `json:"name"`
-	Duration  int    `json:"duration"`
-	StartDate int64  `json:"startdate"`
-	EndDate   int64  `json:"enddate"`
-	Location  *Location
+	ID         int    `json:"id"`
+	Name       string `json:"name"`
+	Duration   int    `json:"duration"`
+	StartDate  string `json:"startdate"`
+	EndDate    string `json:"enddate"`
+	LocationID int    `json:"location"`
 }
 
 // Location struct
@@ -45,13 +45,4 @@ type Location struct {
 	Country   string `json:"country"`
 	OpenTime  int    `json:"opentime"`
 	CloseTime int    `json:"closetime"`
-	Halls     []Hall
-}
-
-// Hall struct
-type Hall struct {
-	ID       int    `json:"id"`
-	Name     string `json:"name"`
-	Location string `json:"location,omitempty"`
-	Capacity int    `json:"capacity"`
 }
