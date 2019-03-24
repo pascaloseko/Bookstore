@@ -2,6 +2,7 @@ package rest
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 
 	"github.com/pascaloseko/Events/persistence"
@@ -28,21 +29,32 @@ func AllEventHandler(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "This feature is coming soon", http.StatusNotImplemented)
 }
 
+/*
+
+ {
+	"name": "Kapuka throwback",
+	"duration": 9,
+	"startdate": "2018-01-04",
+	"enddate": "2018-01-05",
+	"location": 1
+}
+
+*/
+
 // NewEventHandler adds a new event
-func (eh *eventServiceHandler) NewEventHandler(w http.ResponseWriter, r *http.Request) {
+func NewEventHandler(w http.ResponseWriter, r *http.Request) {
 	event := persistence.Event{}
 	err := json.NewDecoder(r.Body).Decode(&event)
 	if nil != err {
-		respondWithError(w, "error occured while decoding event data", http.StatusBadRequest)
+		fmt.Println(err)
+		RespondWithError(w, "error occured while decoding event data", http.StatusBadRequest)
 		return
 	}
-
-	err = eh.dbhandler.AddEvent(event)
-	if err != nil{
-		respondWithError(w, "error occured while persisting event", http.StatusInternalServerError)
-		return
+	if err := event.AddEvent(); err != nil {
+		fmt.Println(err)
+		RespondWithError(w, "error occured while persisting event", http.StatusInternalServerError)
 	}
-	respondWithJSON(w, http.StatusCreated, event)
+	RespondWithJSON(w, http.StatusCreated, event)
 }
 
 // UpdatEventHandler updates event instance
@@ -55,11 +67,13 @@ func DeletEventHandler(w http.ResponseWriter, r *http.Request) {
 	http.Error(w, "This feature is coming soon", http.StatusNotImplemented)
 }
 
-func respondWithError(w http.ResponseWriter, message string, code int) {
-	respondWithJSON(w, code, map[string]string{"error": message})
+//RespondWithError proper error handling with status code
+func RespondWithError(w http.ResponseWriter, message string, code int) {
+	RespondWithJSON(w, code, map[string]string{"error": message})
 }
 
-func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
+//RespondWithJSON proper json handling showing the status code and the response
+func RespondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	response, _ := json.Marshal(payload)
 
 	w.Header().Set("Content-Type", "application/json")
