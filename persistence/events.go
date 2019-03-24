@@ -45,3 +45,23 @@ func (e *Event) AddEvent() (err error) {
 	err = stmt.QueryRow(e.Name, e.Duration, e.StartDate, e.EndDate, e.LocationID).Scan(&e.ID)
 	return
 }
+
+// GetEvents gets all available locations
+func GetEvents() (events []Event, err error) {
+	rows, err := Db.Query("SELECT * FROM event")
+	if err != nil {
+		return
+	}
+
+	for rows.Next() {
+		event := Event{}
+		if err = rows.Scan(&event.ID, &event.Name, &event.Duration, &event.StartDate, &event.EndDate, &event.LocationID); err != nil {
+			return
+		}
+
+		events = append(events, event)
+	}
+
+	rows.Close()
+	return
+}

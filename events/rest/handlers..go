@@ -26,7 +26,11 @@ func FindEventHandler(w http.ResponseWriter, r *http.Request) {
 
 // AllEventHandler gets all available events
 func AllEventHandler(w http.ResponseWriter, r *http.Request) {
-	http.Error(w, "This feature is coming soon", http.StatusNotImplemented)
+	e, err := persistence.GetEvents()
+	if err != nil {
+		RespondWithError(w, "error occured while getting locations", http.StatusInternalServerError)
+	}
+	RespondWithJSON(w, http.StatusOK, e)
 }
 
 /*
