@@ -3,8 +3,8 @@
     "server_write_timeout": 600,
     "dbaddress": "localhost",
     "dbport":   "5432",
-    "dbuser":   "myadmin",
+    "dbuser":   "postgres",
     "dbname":   "events",
-    "dbpass": "password",
+    "dbpass": "postgres",
     "restfulapi_endpoint": "localhost:8080"
 }
