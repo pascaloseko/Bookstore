@@ -4,6 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
+
+	"github.com/gorilla/mux"
 
 	"github.com/pascaloseko/Events/persistence"
 )
@@ -35,11 +38,26 @@ func NewLocationHandler(w http.ResponseWriter, r *http.Request) {
 	RespondWithJSON(w, http.StatusCreated, loc)
 }
 
-// AllLocations gets all available locations
-func AllLocations(w http.ResponseWriter, r *http.Request) {
+// AllLocationsHandler gets all available locations
+func AllLocationsHandler(w http.ResponseWriter, r *http.Request) {
 	loc, err := persistence.GetLocations()
 	if err != nil {
 		RespondWithError(w, "error occured while getting locations", http.StatusInternalServerError)
 	}
 	RespondWithJSON(w, http.StatusOK, loc)
+}
+
+//LocationHandler single location handler
+func LocationHandler(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
+	id := vars["id"]
+	locationID, err := strconv.Atoi(id)
+	if err == nil {
+		getlocation, err := persistence.GetLocation(locationID)
+		if err != nil {
+			RespondWithError(w, err.Error(), http.StatusBadRequest)
+		}
+		RespondWithJSON(w, http.StatusOK, getlocation)
+	}
+
 }

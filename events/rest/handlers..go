@@ -19,10 +19,10 @@ func New(databasehandler persistence.DatabaseHandler) *eventServiceHandler {
 	}
 }
 
-// FindEventHandler search for events
-func FindEventHandler(w http.ResponseWriter, r *http.Request) {
-	http.Error(w, "This feature is coming soon", http.StatusNotImplemented)
-}
+// // FindEventHandler search for events
+// func FindEventHandler(w http.ResponseWriter, r *http.Request) {
+// 	http.Error(w, "This feature is coming soon", http.StatusNotImplemented)
+// }
 
 // AllEventHandler gets all available events
 func AllEventHandler(w http.ResponseWriter, r *http.Request) {

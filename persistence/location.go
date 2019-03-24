@@ -31,3 +31,11 @@ func GetLocations() (locations []Location, err error) {
 	rows.Close()
 	return
 }
+
+//GetLocation gets a single location instance
+func GetLocation(id int) (loc Location, err error) {
+	loc = Location{}
+
+	err = Db.QueryRow("select * from location where id = $1", id).Scan(&loc.ID, &loc.Name, &loc.Address, &loc.Country, &loc.OpenTime, &loc.CloseTime)
+	return
+}
