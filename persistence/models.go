@@ -8,15 +8,12 @@ import (
 
 // User struct
 type User struct {
-	ID        int    `json:"id"`
-	FirstName string `json:"first_name"`
-	LastName  string `json:"last_name"`
-	Age       int    `json:"age"`
-	Bookings  []Booking
+	UserID        int    `json:"userId"`
+	FirstName string `json:"userName"`
 }
 
 func (u *User) String() string {
-	return fmt.Sprintf("id: %d, first_name: %s, last_name: %s, Age: %d, Bookings: %v", u.ID, u.FirstName, u.LastName, u.Age, u.Bookings)
+	return fmt.Sprintf("id: %s, first_name: %s", u.UserID, u.FirstName)
 }
 
 // Booking struct
