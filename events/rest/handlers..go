@@ -26,6 +26,8 @@ func New(databasehandler persistence.DatabaseHandler) *eventServiceHandler {
 
 // AllEventHandler gets all available events
 func AllEventHandler(w http.ResponseWriter, r *http.Request) {
+
+	fmt.Println(r.Context().Value("user"))
 	e, err := persistence.GetEvents()
 	if err != nil {
 		RespondWithError(w, "error occured while getting locations", http.StatusInternalServerError)
