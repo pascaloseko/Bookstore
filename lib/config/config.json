@@ -6,5 +6,5 @@
     "dbuser":   "postgres",
     "dbname":   "events",
     "dbpass": "postgres",
-    "restfulapi_endpoint": "localhost:8080"
+    "restfulapi_endpoint": "localhost:8081"
 }

@@ -23,6 +23,8 @@ func ServeAPI(endpoint string, databasehandler persistence.DatabaseHandler) erro
 	eventsrouter.Methods("GET").Path("/locations").HandlerFunc(AllLocationsHandler)
 	eventsrouter.Methods("GET").Path("/location/{id}").HandlerFunc(LocationHandler)
 
+	eventsrouter.Use(JwtAuth)
+
 	err := http.ListenAndServe(endpoint, r)
 	if err != nil {
 		log.Fatalf("cannot load server: %v", err)
