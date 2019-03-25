@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"strings"
@@ -46,20 +45,21 @@ var JwtAuth = func(next http.Handler) http.Handler {
 		}
 
 		theToken := splitted[1]
-		fmt.Println(theToken)
 		payload := "{\"token\":\"" + theToken + "\"}"
-		fmt.Println(payload)
 		jsonPayload := []byte(payload)
 		responseSSO, err := http.Post(ssoURL, "application/json", bytes.NewBuffer(jsonPayload))
 
 		if err != nil {
 			log.Fatalln(err)
 		}
-
+		if responseSSO.Status != "200 OK" {
+			response = map[string]interface{}{"error": "Auth Error"}
+			RespondWithJSON(w, http.StatusBadRequest, response)
+			return
+		}
 		user := &persistence.User{}
 		json.NewDecoder(responseSSO.Body).Decode(user)
-		fmt.Println(user)
-		ctx := context.WithValue(r.Context(), "user", user.ID)
+		ctx := context.WithValue(r.Context(), "user", user.UserID)
 		r = r.WithContext(ctx)
 		next.ServeHTTP(w, r)
 	})

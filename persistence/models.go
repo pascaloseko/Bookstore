@@ -8,12 +8,12 @@ import (
 
 // User struct
 type User struct {
-	ID        string    `json:"userId"`
+	UserID        int    `json:"userId"`
 	FirstName string `json:"userName"`
 }
 
 func (u *User) String() string {
-	return fmt.Sprintf("id: %s, first_name: %s", u.ID, u.FirstName)
+	return fmt.Sprintf("id: %s, first_name: %s", u.UserID, u.FirstName)
 }
 
 // Booking struct
